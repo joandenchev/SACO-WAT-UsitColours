@@ -4,7 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "node app.js"
+    "start": "node server/rest/service.js",
+    "serve": "node main.js -s"
   },
   "dependencies": {
     "express": "^4.18.2",

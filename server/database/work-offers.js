@@ -1,6 +1,6 @@
 import {JSDOM} from 'jsdom'
 import fetch from 'node-fetch'
-import {sendDocuments} from "./database.js";
+import {sendDocuments} from "./database.js"
 
 const infos = {
     "Ниво на английски:": "englishLevel",
@@ -28,6 +28,7 @@ class WorkOffer{
     englishLevel
     overtime
     applicationPeriod
+    imageLink
     constructor(offerHtml) {
 
         const redLine  = offerHtml[0].textContent.trim().split(/\s*\n+\s*/)
@@ -60,6 +61,7 @@ class WorkOffer{
         this.overtime = /възможност за допълнителни часове/.test(this.specialties)
         this.averageWeeklyHours = parseInt(/\d+/.exec(this.specialties)[0])
         this.tips = /да|yes/i.test(this.tips)
+        this.imageLink = offerHtml[1].querySelector('a img').src
 
         if (typeof this.accommodation === "string"){
             if (this.accommodation.toLowerCase() === 'безплатно'){
@@ -74,7 +76,7 @@ class WorkOffer{
     }
 }
 
-export async function extractPage(pageLink){
+export async function extractPage(pageLink, collection, returnOn){
     const head = await fetch(pageLink)
     if (!head.ok) { throw new Error(`Failed to fetch page: ${head.status} ${head.statusText}`) }
     const html = await head.text()
@@ -93,6 +95,10 @@ export async function extractPage(pageLink){
     }
 
     while (offers.length > counter+2) addOffer()
-    await  sendDocuments(offersArray)
-    return document.getElementsByClassName("nextpostslink")[0] //next page
+    await  sendDocuments(offersArray, collection)
+
+    if (returnOn) {
+        const s = document.querySelector('.pages').textContent.split(/\s+/)
+        return s[s.length-1]
+    }
 }
