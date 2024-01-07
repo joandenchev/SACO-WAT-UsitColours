@@ -10,4 +10,4 @@ function refresh(){
             .catch((e) => console.error('Extracting was unsuccessful.\n' + e.stack))
     })}
 
-function service() { import('./server/rest/service.js') }
+function service() { import('./server/cli/service.js') }
