@@ -7,7 +7,8 @@
     "serve": "node main.js -s",
     "refresh": "node main.js -r",
     "dev": "vite --config config/vite.config.ts",
-    "build": "vue-tsc -p config/tsconfig.json && vite build --config config/vite.config.ts"
+    "build": "vue-tsc -p config/tsconfig.json && vite build --config config/vite.config.ts",
+    "q": "node ./cli/query.js"
   },
   "dependencies": {
     "express": "^4.18.2",

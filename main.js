@@ -4,10 +4,10 @@ switch (process.argv[2]){
 }
 
 function refresh(){
-    import('./server/database/data-run.js').then(dr => {
+    import('./database/data-run.js').then(dr => {
         dr.updateAllData()
             .then(() => (console.log('Extraction has started!')))
             .catch((e) => console.error('Extracting was unsuccessful.\n' + e.stack))
     })}
 
-function service() { import('./server/cli/service.js') }
+function service() { import('./cli/service.js') }

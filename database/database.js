@@ -49,3 +49,7 @@ export async function updateActuality(actualityObject){
 export async function getCollectionNames(){
     return (await client.db(usit).listCollections().toArray()).filter(el => el.name)
 }
+
+export function getClient(){
+    return [client, usit]
+}
