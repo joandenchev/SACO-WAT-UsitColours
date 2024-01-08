@@ -1,5 +1,5 @@
 import {getClient} from "../database/database.js";
-import {comaOperation, filter, usitSearch} from "./filters.js";
+import { filter, usitSearch} from "./filters.js";
 let [client, dbName] = getClient()
 const collectionName = 'Work offers'
 const offers = []
