@@ -1,8 +1,7 @@
 import {MongoClient} from 'mongodb'
 
-const cString = 'mongodb://localhost:27017/'
 const usit = 'UsitColours_SACO'
-const client = new MongoClient(cString)
+const client = new MongoClient(process.env.MONGODB_CONNECTION_STRING)
 
 await connectToMongoDB()
 async function connectToMongoDB() {

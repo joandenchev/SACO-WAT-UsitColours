@@ -1,45 +1,29 @@
 import {extractPage} from "./work-offers.js"
-import {deleteAll, getCollectionNames, getInfo, updateActuality} from "./database.js";
+import {dbClientClose, deleteAll} from "./database.js";
 
-export async function updateAllData() {
+export async function updateAllData(collection) {
 
-    //get information about the collections and determine which one should be updated
-    const info = await getInfo()
-    let newCollection;
+    console.log('Deleting old data...')
+    await deleteAll(collection)
+    console.log('Old data deleted!')
+    const promises = []
 
-    for (const el of info['actuality']){
-        const key = Object.keys(el)[0]
-
-        if (el[key]){
-            newCollection = key
-        }
-    }
-
-    //empty the collection
-    await deleteAll(newCollection)
-
-    //write the new contents
-    const link = 'https://gotousa.bg/bg/work-and-travel-usa/rabotni-oferti-za-brigada/'
-    const count = await extractPage(link, newCollection, true)
-
+    console.log('Extracting new data...')
+    const link = process.env.OFFERS_LINK
+    const count = await extractPage(link, collection, true)
 
     for (let i = 2; i <= count; i++) {
-        extractPage(link + `page/${i}/`, newCollection)
+        promises.push(extractPage(link + `page/${i}/`, collection)
             .then(() => (console.log(`Page ${i<10 ? ' ' + i : i} extracted.`)))
-            .catch(() => (console.error(`Page ${i} produced error.`)))
+            .catch(() => (console.error(`Page ${i} produced error.`))))
     }
-    console.log('Looping has finished.')
 
-    //set the collection for the next update
-    const collectionNames = (await getCollectionNames()).filter(el => el.name !== 'info').map(e=> e.name)
+    await Promise.all(promises)
+    console.log('Data extraction completed!')
 
-    const actualityValues = []
-    let trueSet = false
+    await dbClientClose()
+}
 
-    for (const col of collectionNames) {
-        actualityValues.push({
-            [col]: ( col===newCollection || trueSet ) ? false : ( trueSet=true )
-        })
-    }
-    await updateActuality(actualityValues)
+export async function transform(collection){
+
 }

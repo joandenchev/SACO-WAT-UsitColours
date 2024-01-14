@@ -4,24 +4,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "serve": "node main.js -s",
     "refresh": "node main.js -r",
-    "dev": "vite --config config/vite.config.ts",
-    "build": "vue-tsc -p config/tsconfig.json && vite build --config config/vite.config.ts",
-    "q": "node ./cli/query.js"
+    "test": "node ./cli/query.js"
   },
   "dependencies": {
-    "express": "^4.18.2",
+    "dotenv": "^16.3.1",
     "jsdom": "^23.0.1",
     "mongodb": "^6.3.0",
     "node-fetch": "^3.3.2"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-vue": "^4.5.2",
-    "sass": "^1.69.7",
-    "typescript": "^5.2.2",
-    "vite": "^5.0.10",
-    "vue": "^3.4.5",
-    "vue-tsc": "^1.8.25"
   }
 }

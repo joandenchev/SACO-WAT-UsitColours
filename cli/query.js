@@ -26,13 +26,13 @@ function end(){
 function maximumCast(){
     let c = 0
     const {filtered: f1, remaining: notN} = filter(offers, notNull, c)
-    const {filtered: f2, remaining: res1} = filter(notN, usitSearch, c+=f1.length, /безплат(ен|н*)/gi)
-    const {filtered: f3, remaining: res2} = filter(res1, usitSearch, c+=f2.length, /бонуси?/gi)
+    //const {filtered: f2, remaining: res1} = filter(notN, usitSearch, c+=f1.length, /безплат(ен|н*)/gi)
+    const {filtered: f3, remaining: res2} = filter(notN, usitSearch, c+=f1.length, /бонуси?/gi)
     const {filtered: f4, remaining: res4} = filter(res2, usitSearch, c+=f3.length, /хран/gi)
     const {filtered: f5, remaining: res5} = filter(res4, usitSearch, c+=f4.length, /(работа|позиция)/gi)
     const {filtered: f6, remaining: res6} = filter(res5, usitSearch, c+=f5.length, /(отстъпк|намален)/gi)
     const {filtered: f7, remaining: res7} = filter(res6, usitSearch, c+ f6.length, /(бакшиш|работодател|фитнес)/gi)
-    res7.forEach(e=>console.log(e.id + ': ' + e.extras))
+    f3.forEach(e=>console.log(e.id + ': ' + e.extras))
 }
 
 function filter(elements, filterFn, alreadyFilteredCount = 0, ...args){

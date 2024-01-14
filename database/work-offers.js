@@ -76,7 +76,7 @@ class WorkOffer{
     }
 }
 
-export async function extractPage(pageLink, collection, returnOn){
+export async function extractPage(pageLink, collection, showPagesCount){
     const head = await fetch(pageLink)
     if (!head.ok) { throw new Error(`Failed to fetch page: ${head.status} ${head.statusText}`) }
     const html = await head.text()
@@ -97,7 +97,7 @@ export async function extractPage(pageLink, collection, returnOn){
     while (offers.length > counter+2) addOffer()
     await  sendDocuments(offersArray, collection)
 
-    if (returnOn) {
+    if (showPagesCount) {
         const s = document.querySelector('.pages').textContent.split(/\s+/)
         return s[s.length-1]
     }
