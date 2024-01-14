@@ -8,7 +8,7 @@ await connectToMongoDB()
 async function connectToMongoDB() {
     try {
         await client.connect()
-        console.log('\x1b[36mStarting SACO-WAT-UsitColours\x1b[0m')
+        console.log('\x1b[1;36mStarting SACO-WAT-UsitColours\x1b[0m')
         console.log('Connected to MongoDB')
     } catch (e) {
         console.error(e.stack)
